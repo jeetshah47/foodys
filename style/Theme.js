@@ -7,6 +7,7 @@ export const theme = {
     },
     white: "#FFFFFF",
     secondary: "#F2F2F2",
+    tertiary: "#9796A1",
     font: {
       primary: "#FF460A",
       secondary: "#323643",
@@ -14,6 +15,7 @@ export const theme = {
   },
   font: {
     fontSize: {
+      small: 12,
       regular: 16,
       subTitle: 30,
       large: 60,
