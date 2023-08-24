@@ -18,10 +18,11 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderWidth: 1,
     borderColor: "#EFEFEF",
-    padding: 19,
+    padding: 16,
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
+    flex: 1,
   },
   text: {
     fontSize: 14,

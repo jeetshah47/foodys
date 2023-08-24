@@ -1,13 +1,61 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
 import { theme } from "../../style/Theme";
 import SearchBar from "../common/SearchBar/SearchBar";
 import RestaurantCard from "./RestaurantCard";
+import Filter from "../common/Filter/Filter";
 
 const Restaurant = () => {
+  const data = [
+    {
+      id: 1,
+      name: "Burger King",
+      logoUrl:
+        "https://firebasestorage.googleapis.com/v0/b/foodys-34dd3.appspot.com/o/image1.png",
+      caption: "American - Burgers - Fast Food",
+    },
+    {
+      id: 2,
+      name: "Mc Donalds",
+      logoUrl:
+        "https://firebasestorage.googleapis.com/v0/b/foodys-34dd3.appspot.com/o/image2.png",
+      caption: "American - Burgers - Fast Food",
+    },
+    {
+      id: 3,
+      name: "Mc Donalds",
+      logoUrl:
+        "https://firebasestorage.googleapis.com/v0/b/foodys-34dd3.appspot.com/o/image3.png",
+      caption: "American - Burgers - Fast Food",
+    },
+    {
+      id: 4,
+      name: "Mc Donalds",
+      logoUrl:
+        "https://firebasestorage.googleapis.com/v0/b/foodys-34dd3.appspot.com/o/image4.png",
+      caption: "American - Burgers - Fast Food",
+    },
+    {
+      id: 5,
+      name: "Mc Donalds",
+      logoUrl:
+        "https://firebasestorage.googleapis.com/v0/b/foodys-34dd3.appspot.com/o/image5.png",
+      caption: "American - Burgers - Fast Food",
+    },
+  ];
+
   return (
     <View style={styles.container}>
       <Text style={styles.haeding}>What would you like to order</Text>
-      <SearchBar />
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <SearchBar />
+        <Filter />
+      </View>
       <View>
         <Text
           style={{
@@ -17,9 +65,18 @@ const Restaurant = () => {
         >
           Featured Restaurants
         </Text>
-        <ScrollView style={{ height: "75%" }}>
-          <RestaurantCard />
-        </ScrollView>
+        <View
+          style={{
+            width: "100%",
+            height: 1,
+            backgroundColor: theme.colors.secondary,
+          }}
+        />
+        <FlatList
+          style={{ height: "78%" }}
+          data={data}
+          renderItem={({ item }) => <RestaurantCard {...item} />}
+        />
       </View>
     </View>
   );

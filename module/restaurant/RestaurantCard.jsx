@@ -1,11 +1,17 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { theme } from "../../style/Theme";
 import { Iconify } from "react-native-iconify";
+import { useEffect } from "react";
 
 const RestaurantCard = ({ name, id, logoUrl, caption }) => {
+  const token = process.env.FIREBASE_ACCESS_TOKEN;
+
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require("./image1.png")} />
+      <Image
+        style={styles.image}
+        source={{ uri: `${logoUrl}?alt=media&token=${token}` }}
+      />
       <View style={{ marginHorizontal: 13 }}>
         <Text
           style={{ fontSize: 16, fontWeight: theme.font.fontWeight.medium }}
@@ -23,7 +29,7 @@ const RestaurantCard = ({ name, id, logoUrl, caption }) => {
           </View>
         </View>
         <View>
-          <Text style={{ color: "#8A8E9B" }}>Burger</Text>
+          <Text style={{ color: "#8A8E9B" }}>{caption}</Text>
         </View>
       </View>
     </View>
@@ -39,6 +45,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
+    height: 175,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
   },
