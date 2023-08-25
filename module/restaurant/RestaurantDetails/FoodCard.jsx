@@ -50,8 +50,9 @@ const FoodCard = ({ imgUrl, name, price, nutritionalUrl, type, id }) => {
         <View
           style={{
             flexDirection: "row",
-            width: "100%",
+            // width: "100%",
             alignItems: "center",
+            justifyContent: "space-around",
             // gap: 1,
           }}
         >
