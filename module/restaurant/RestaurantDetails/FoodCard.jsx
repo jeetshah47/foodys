@@ -9,12 +9,12 @@ import {
 import { theme } from "../../../style/Theme";
 import { Iconify } from "react-native-iconify";
 
-const FoodCard = ({ imageUrl, name, price }) => {
+const FoodCard = ({ imgUrl, name, price, nutritionalUrl, type, id }) => {
   return (
     <View style={styles.container}>
       <Image
-        style={{ borderRadius: 15, width: 170, height: 170 }}
-        source={{ uri: imageUrl }}
+        style={{ borderRadius: 15, width: 300, height: 200 }}
+        source={{ uri: nutritionalUrl }}
       />
 
       <Pressable
@@ -28,7 +28,7 @@ const FoodCard = ({ imageUrl, name, price }) => {
         <Text>Nutrients</Text>
       </Pressable>
 
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
         <View style={{ marginHorizontal: 10, marginVertical: 12 }}>
           <Text style={{ fontWeight: theme.font.fontWeight.bold }}>{name}</Text>
           <View>
@@ -45,17 +45,23 @@ const FoodCard = ({ imageUrl, name, price }) => {
             />{" "} */}
               {price}
             </Text>
-            <Iconify icon="mdi:lacto-vegetarian" color={"#"} />
           </View>
         </View>
-        <View>
-          <TouchableNativeFeedback>
-            <Iconify
-              icon="carbon:add-filled"
-              color={theme.colors.orange.secondary}
-              size={30}
-            />
-          </TouchableNativeFeedback>
+        <View
+          style={{
+            flexDirection: "row",
+            width: "100%",
+            alignItems: "center",
+            // gap: 1,
+          }}
+        >
+          <Iconify icon="mdi:lacto-vegetarian" color={"#22aa00"} />
+          <Iconify
+            icon="carbon:add-filled"
+            color={theme.colors.orange.secondary}
+            size={30}
+          />
+
           {/*  */}
         </View>
       </View>

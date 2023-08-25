@@ -9,21 +9,27 @@ import {
 import { theme } from "../../../style/Theme";
 import FoodCard from "./FoodCard";
 import { Iconify } from "react-native-iconify";
+import { getFoodByid } from "./api";
+import { useEffect, useState } from "react";
 
-const RestaurantDetails = ({ title, data }) => {
+const RestaurantDetails = ({ title, route }) => {
+  const { itemId } = route.params;
+  const [foodItem, setFoodItem] = useState([]);
+  useEffect(() => {
+    const fetchFood = async () => {
+      try {
+        const response = await getFoodByid(itemId);
+        console.log(response.items);
+        setFoodItem(response.items);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchFood();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 20 }}>
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: "#d3d1d8",
-            padding: 10,
-            borderRadius: 8,
-          }}
-        >
-          <Iconify icon="ion:chevron-back-outline" size={26} />
-        </View>
         <Text style={styles.text}>{title}</Text>
       </View>
       <Image
@@ -41,8 +47,18 @@ const RestaurantDetails = ({ title, data }) => {
 
       <ScrollView>
         <View style={styles.foodSection}>
-          {data?.map((item, index) => (
-            <FoodCard key={index} {...item} />
+          {foodItem?.map((item, index) => (
+            <>
+              <FoodCard
+                key={index}
+                imgUrl={item.imgUrl}
+                name={item.name}
+                id={item.id}
+                nutritionalUrl={item.nutritionalUrl}
+                price={item.price}
+                type={item.type}
+              />
+            </>
           ))}
         </View>
       </ScrollView>
@@ -53,7 +69,7 @@ const RestaurantDetails = ({ title, data }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 20,
+    // marginHorizontal: 20,
   },
   text: {
     fontSize: theme.font.fontSize.subTitle,
@@ -67,10 +83,13 @@ const styles = StyleSheet.create({
     color: theme.colors.font.secondary,
   },
   foodSection: {
-    flexWrap: "wrap",
-    flexDirection: "row",
+    // flexWrap: "wrap",
+    flexDirection: "column",
     gap: 15,
     marginVertical: 10,
+    alignItems: "center",
+    // marginHorizontal: 20,
+    // justifyContent: "center",
   },
   cover: {
     width: "100%",
