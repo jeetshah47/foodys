@@ -4,6 +4,7 @@ import RestaurantStack from "../restaurant/RestaurantStack";
 import Profile from "../profile/Profile";
 import { Iconify } from "react-native-iconify";
 import { theme } from "../../style/Theme";
+import Order from "../orders/Order";
 const MyTab = () => {
   const Tabs = createBottomTabNavigator();
   const FummyScreen = () => {
@@ -38,6 +39,8 @@ const MyTab = () => {
       <Tabs.Screen
         name="Proflie"
         options={{
+          headerShown: false,
+
           tabBarIcon: ({ focused }) => (
             <Iconify
               icon="iconamoon:profile-circle-fill"
@@ -49,6 +52,23 @@ const MyTab = () => {
           ),
         }}
         component={Profile}
+      />
+      <Tabs.Screen
+        name="Orders"
+        options={{
+          headerShown: false,
+
+          tabBarIcon: ({ focused }) => (
+            <Iconify
+              icon="mdi:cart"
+              color={
+                focused ? theme.colors.orange.secondary : theme.colors.tertiary
+              }
+              size={30}
+            />
+          ),
+        }}
+        component={Order}
       />
     </Tabs.Navigator>
   );

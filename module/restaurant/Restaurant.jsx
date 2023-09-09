@@ -19,6 +19,8 @@ const Restaurant = ({ navigation }) => {
       itemId: id,
     });
   };
+
+  const [searchParam, setSearchParam] = useState("");
   // const data = [
   //   {
   //     id: 1,
@@ -58,7 +60,7 @@ const Restaurant = ({ navigation }) => {
   // ];
 
   const [data, setData] = useState([]);
-
+  const [filterRestaurant, setFilter] = useState([]);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -74,6 +76,11 @@ const Restaurant = ({ navigation }) => {
     // setData
   }, []);
 
+  useEffect(() => {
+    const searct = data?.filter((item) => item.name.includes(searchParam));
+    setFilter(searct);
+  }, [searchParam]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.haeding}>What would you like to order</Text>
@@ -84,7 +91,7 @@ const Restaurant = ({ navigation }) => {
           alignItems: "center",
         }}
       >
-        <SearchBar />
+        <SearchBar param={searchParam} setValue={setSearchParam} />
         <Filter />
       </View>
       <View>
@@ -105,7 +112,7 @@ const Restaurant = ({ navigation }) => {
         />
         <FlatList
           style={{ height: "78%" }}
-          data={data}
+          data={filterRestaurant.length > 0 ? filterRestaurant : data}
           renderItem={({ item }) => (
             <Pressable onPress={() => handlePress(item.id)}>
               <RestaurantCard {...item} />

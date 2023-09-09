@@ -9,3 +9,8 @@ export const LoginApi = async ({ email, password }) => {
   });
   return result.data;
 };
+
+export const SignupApi = async (data) => {
+  const result = await axios.post(`${API_URL}/user`, { ...data });
+  return result.data;
+};

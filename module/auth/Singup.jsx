@@ -10,15 +10,19 @@ import {
 } from "react-native";
 import { theme } from "../../style/Theme";
 import { useState } from "react";
-import { LoginApi } from "./api";
+import { LoginApi, SignupApi } from "./api";
 import Loader from "../common/Loader/Loader";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Iconify } from "react-native-iconify";
 
-const Login = ({ onSuccess }) => {
+const Signup = ({ onSuccess }) => {
   const [user, setUser] = useState({
-    email: "user1@example.com",
-    password: "user1_password",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    phoneNumber: "",
+    address: "",
   });
 
   const [isLoading, setLoading] = useState(false);
@@ -28,11 +32,14 @@ const Login = ({ onSuccess }) => {
 
   const handleLoginPress = async () => {
     setLoading(true);
-    console.log(user);
     try {
-      const response = await LoginApi({
+      const response = await SignupApi({
+        first_name: user.firstName,
+        last_name: user.lastName,
         email: user.email,
         password: user.password,
+        ph_number: user.phoneNumber,
+        address: user.address,
       });
       console.log(response);
       setLoading(false);
@@ -54,19 +61,58 @@ const Login = ({ onSuccess }) => {
   };
 
   const handleToast = () => {
-    ToastAndroid.show("Invalid Login", ToastAndroid.SHORT);
+    ToastAndroid.show("Please Enter Correct Values", ToastAndroid.SHORT);
   };
 
   return (
     <View style={styles.inputContainer}>
       <KeyboardAwareScrollView>
         <View style={{ marginVertical: 50 }}>
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ width: "50%" }}>
+              <Text style={styles.inputLabel}>First Name</Text>
+              <TextInput
+                onChangeText={(text) => setUser({ ...user, firstName: text })}
+                style={styles.inputText}
+                value={user.firstName}
+              />
+            </View>
+            <View style={{ width: "50%" }}>
+              <Text style={styles.inputLabel}>Last Name</Text>
+              <TextInput
+                onChangeText={(text) => setUser({ ...user, lastName: text })}
+                style={styles.inputText}
+                value={user.lastName}
+              />
+            </View>
+          </View>
           <View>
             <Text style={styles.inputLabel}>Email Address</Text>
             <TextInput
               onChangeText={(text) => setUser({ ...user, email: text })}
               style={styles.inputText}
               value={user.email}
+              textContentType="emailAddress"
+            />
+          </View>
+
+          <View>
+            <Text style={styles.inputLabel}>Phone Number</Text>
+            <TextInput
+              onChangeText={(text) => setUser({ ...user, phoneNumber: text })}
+              style={styles.inputText}
+              value={user.phoneNumber}
+              textContentType="telephoneNumber"
+              keyboardType="phone-pad"
+            />
+          </View>
+          <View>
+            <Text style={styles.inputLabel}>Address</Text>
+            <TextInput
+              onChangeText={(text) => setUser({ ...user, address: text })}
+              style={styles.inputText}
+              value={user.address}
+              textContentType="fullStreetAddress"
             />
           </View>
           <View>
@@ -115,7 +161,7 @@ const Login = ({ onSuccess }) => {
             {isLoading ? (
               <Loader color={theme.colors.white} display={true} />
             ) : (
-              "Login"
+              "Signup"
             )}
           </Text>
         </Pressable>
@@ -125,32 +171,8 @@ const Login = ({ onSuccess }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.secondary,
-    justifyContent: "space-between",
-  },
-  logoContainer: {
-    flex: 0.4,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: theme.colors.white,
-    borderRadius: 20,
-    shadowRadius: 20,
-  },
-  buttonTabs: {
-    justifyContent: "space-between",
-    width: "100%",
-    flexDirection: "row",
-    alignSelf: "center",
-    paddingHorizontal: 50,
-    position: "absolute",
-    bottom: 0,
-    marginHorizontal: 10,
-  },
   inputContainer: {
-    flex: 0.6,
+    flex: 0.7,
     // justifyContent: "flex-end",
     flexDirection: "column",
     marginHorizontal: 50,
@@ -179,14 +201,14 @@ const styles = StyleSheet.create({
     fontWeight: theme.font.fontWeight.medium,
   },
   inputText: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: theme.font.fontWeight.medium,
-    paddingVertical: 10,
-    // paddingHorizontal: 20,
     marginVertical: 10,
     borderBottomWidth: 1,
     borderRadius: 10,
     width: "100%",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     // borderColor: theme.colors.orange.secondary,
   },
   eyeIcon: {
@@ -196,4 +218,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Signup;

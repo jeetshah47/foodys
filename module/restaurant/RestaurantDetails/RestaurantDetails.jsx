@@ -19,8 +19,7 @@ const RestaurantDetails = ({ title, route }) => {
     const fetchFood = async () => {
       try {
         const response = await getFoodByid(itemId);
-        console.log(response.items);
-        setFoodItem(response.items);
+        setFoodItem(response);
       } catch (error) {
         console.log(error);
       }
@@ -48,17 +47,15 @@ const RestaurantDetails = ({ title, route }) => {
       <ScrollView>
         <View style={styles.foodSection}>
           {foodItem?.map((item, index) => (
-            <>
-              <FoodCard
-                key={index}
-                imgUrl={item.imgUrl}
-                name={item.name}
-                id={item.id}
-                nutritionalUrl={item.nutritionalUrl}
-                price={item.price}
-                type={item.type}
-              />
-            </>
+            <FoodCard
+              key={index}
+              imgUrl={item.imgUrl}
+              name={item.name}
+              id={item.id}
+              nutritionalUrl={item.nutritionalUrl}
+              price={item.price}
+              type={item.type}
+            />
           ))}
         </View>
       </ScrollView>

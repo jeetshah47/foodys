@@ -21,10 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.jeetshahajwa.foodys"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "964544c4-7a29-4195-857a-9b8a6ce055e1"
+      }
+    },
+    "owner": "jeetshahajwa"
   }
 }

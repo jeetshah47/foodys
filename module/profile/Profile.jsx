@@ -4,15 +4,6 @@ import { theme } from "../../style/Theme";
 import { useState } from "react";
 
 const Profile = () => {
-  const [inputStyle, setInputStyle] = useState({
-    fontSize: 20,
-    paddingVertical: 25,
-    paddingHorizontal: 16,
-    marginVertical: 10,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: theme.colors.tertiary,
-  });
   return (
     <View style={styles.container}>
       <Image source={require("./Group.png")} style={{ width: "100%" }} />
@@ -26,21 +17,11 @@ const Profile = () => {
       <View style={{ marginHorizontal: 20 }}>
         <View style={styles.input}>
           <Text style={styles.label}>Full Name</Text>
-          <TextInput
-            onFocus={() => {
-              setInputStyle({
-                ...inputStyle,
-                borderColor: theme.colors.orange.primary,
-              });
-            }}
-            style={{ ...inputStyle }}
-          >
-            Full Name
-          </TextInput>
+          <TextInput style={styles.inputField}>Full Name</TextInput>
         </View>
         <View style={styles.input}>
           <Text style={styles.label}>E-Mail</Text>
-          <TextInput style={{}}>kyc@gmail.com</TextInput>
+          <TextInput style={styles.inputField}>kyc@gmail.com</TextInput>
         </View>
         <View style={styles.input}>
           <Text style={styles.label}>Phone Number</Text>

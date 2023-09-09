@@ -1,12 +1,18 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { theme } from "../../../style/Theme";
 import { Iconify } from "react-native-iconify";
+import Base from "../../base/Base";
 
-const SearchBar = () => {
+const SearchBar = ({ param, setValue }) => {
   return (
     <View style={styles.container}>
       <Iconify icon="iconamoon:search-bold" color={"#767F9D"} />
-      <Text>Find Food or Restaurant</Text>
+      <TextInput
+        style={styles.text}
+        onChangeText={setValue}
+        value={param}
+        placeholder="Search for restaurants"
+      />
     </View>
   );
 };

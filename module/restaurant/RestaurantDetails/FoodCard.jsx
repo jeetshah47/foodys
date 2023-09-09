@@ -1,5 +1,7 @@
 import {
+  Button,
   Image,
+  Modal,
   Pressable,
   StyleSheet,
   Text,
@@ -8,27 +10,69 @@ import {
 } from "react-native";
 import { theme } from "../../../style/Theme";
 import { Iconify } from "react-native-iconify";
+import { useState } from "react";
 
 const FoodCard = ({ imgUrl, name, price, nutritionalUrl, type, id }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [quantity, setQuantity] = useState(0);
   return (
     <View style={styles.container}>
       <Image
         style={{ borderRadius: 15, width: 300, height: 200 }}
-        source={{ uri: nutritionalUrl }}
+        source={{ uri: imgUrl }}
       />
+      <View
+        style={{
+          position: "absolute",
+          right: 10,
+          top: 10,
+          backgroundColor: theme.colors.white,
+        }}
+      >
+        {type === "veg" ? (
+          <Iconify icon="mdi:lacto-vegetarian" color={"#22aa00"} />
+        ) : (
+          <Iconify icon="mdi:lacto-vegetarian" color={"#FF0000"} />
+        )}
+      </View>
 
       <Pressable
         android_ripple={{ color: "#9796A1", radius: 50 }}
         style={styles.info}
+        onPress={() => setModalVisible(!modalVisible)}
       >
         <Iconify
           icon="icon-park-solid:traditional-chinese-medicine"
           color={"#2e88fa"}
         />
+        <Modal animationType="slide=" visible={modalVisible}>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <Text>Nutrients Chart</Text>
+            <Image source={{ uri: nutritionalUrl }} />
+            <Button
+              title="Back"
+              onPress={() => setModalVisible(!modalVisible)}
+            />
+          </View>
+        </Modal>
         <Text>Nutrients</Text>
       </Pressable>
 
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginRight: 10,
+        }}
+      >
         <View style={{ marginHorizontal: 10, marginVertical: 12 }}>
           <Text style={{ fontWeight: theme.font.fontWeight.bold }}>{name}</Text>
           <View>
@@ -38,11 +82,7 @@ const FoodCard = ({ imgUrl, name, price, nutritionalUrl, type, id }) => {
                 color: theme.colors.tertiary,
               }}
             >
-              Rs.{" "}
-              {/* <Iconify
-              icon="fa6-solid:indian-rupee-sign"
-              size={theme.font.fontSize.small}
-            />{" "} */}
+              Rs.
               {price}
             </Text>
           </View>
@@ -56,14 +96,24 @@ const FoodCard = ({ imgUrl, name, price, nutritionalUrl, type, id }) => {
             // gap: 1,
           }}
         >
-          <Iconify icon="mdi:lacto-vegetarian" color={"#22aa00"} />
+          {/*  */}
+          <Iconify
+            icon="carbon:subtract-alt"
+            color={theme.colors.orange.secondary}
+            size={28}
+            onPress={() => {
+              if (quantity > 0) {
+                setQuantity(quantity - 1);
+              }
+            }}
+          />
+          <Text>{quantity}</Text>
           <Iconify
             icon="carbon:add-filled"
             color={theme.colors.orange.secondary}
             size={30}
+            onPress={() => setQuantity(quantity + 1)}
           />
-
-          {/*  */}
         </View>
       </View>
     </View>
