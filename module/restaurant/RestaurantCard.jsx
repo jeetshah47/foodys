@@ -8,10 +8,9 @@ const RestaurantCard = ({ name, id, logoUrl, caption }) => {
 
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={{ uri: `${logoUrl}?alt=media&token=${token}` }}
-      />
+      <View style={{ width: "100%", height: 200 }}>
+        <Image style={styles.image} source={{ uri: `${logoUrl}` }} />
+      </View>
       <View style={{ marginHorizontal: 13 }}>
         <Text
           style={{ fontSize: 16, fontWeight: theme.font.fontWeight.medium }}
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 175,
+    height: "100%",
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
   },

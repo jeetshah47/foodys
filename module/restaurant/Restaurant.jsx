@@ -12,15 +12,39 @@ import RestaurantCard from "./RestaurantCard";
 import Filter from "../common/Filter/Filter";
 import { useEffect, useState } from "react";
 import { getRestaurant } from "./api";
+import { Dropdown } from "react-native-element-dropdown";
+import { Iconify } from "react-native-iconify";
 
 const Restaurant = ({ navigation }) => {
-  const handlePress = (id) => {
+  const handlePress = (id, logoUrl) => {
     navigation.navigate("Restaurant Detail", {
       itemId: id,
+      logoUrl: logoUrl,
     });
   };
 
+  const cityData = [
+    {
+      id: 1,
+      name: "Vadodara",
+    },
+    {
+      id: 2,
+      name: "Surat",
+    },
+    {
+      id: 3,
+      name: "Ahmedabad",
+    },
+  ];
+
   const [searchParam, setSearchParam] = useState("");
+  const [city, setCity] = useState({
+    id: 1,
+    name: "Vadodara",
+  });
+  const [viewCity, setViewCity] = useState(false);
+
   // const data = [
   //   {
   //     id: 1,
@@ -83,7 +107,36 @@ const Restaurant = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.haeding}>What would you like to order</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text style={styles.haeding}>What would you like to order</Text>
+        <Iconify
+          icon="fluent:location-12-filled"
+          size={30}
+          color={theme.colors.orange.secondary}
+          onPress={() => setViewCity(true)}
+        />
+      </View>
+      {viewCity && (
+        <Dropdown
+          data={cityData}
+          onChange={(value) => {
+            setCity(value);
+            setViewCity(false);
+          }}
+          placeholder="Select City"
+          labelField={"name"}
+          valueField={"id"}
+          value={city.id}
+          style={styles.dropdown}
+        />
+      )}
+
       <View
         style={{
           flexDirection: "row",
@@ -101,7 +154,7 @@ const Restaurant = ({ navigation }) => {
             fontWeight: theme.font.fontWeight.medium,
           }}
         >
-          Featured Restaurants
+          Featured Restaurants of {city.name}
         </Text>
         <View
           style={{
@@ -114,7 +167,7 @@ const Restaurant = ({ navigation }) => {
           style={{ height: "78%" }}
           data={filterRestaurant.length > 0 ? filterRestaurant : data}
           renderItem={({ item }) => (
-            <Pressable onPress={() => handlePress(item.id)}>
+            <Pressable onPress={() => handlePress(item.id, item.logoUrl)}>
               <RestaurantCard {...item} />
             </Pressable>
           )}
@@ -132,12 +185,19 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   haeding: {
-    fontSize: theme.font.fontSize.subTitle,
+    fontSize: 22,
     marginVertical: 9,
     fontWeight: theme.font.fontWeight.bold,
     color: theme.colors.font.secondary,
   },
   scroll: {},
+  dropdown: {
+    borderWidth: 1,
+    borderColor: theme.colors.secondary,
+    borderRadius: 10,
+    marginVertical: 5,
+    paddingHorizontal: 10,
+  },
 });
 
 export default Restaurant;

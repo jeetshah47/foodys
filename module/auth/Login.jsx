@@ -14,6 +14,7 @@ import { LoginApi } from "./api";
 import Loader from "../common/Loader/Loader";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Iconify } from "react-native-iconify";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = ({ onSuccess }) => {
   const [user, setUser] = useState({
@@ -36,6 +37,7 @@ const Login = ({ onSuccess }) => {
       });
       console.log(response);
       setLoading(false);
+      AsyncStorage.setItem("token", response.token);
       onSuccess();
     } catch (error) {
       handleToast();
@@ -47,7 +49,7 @@ const Login = ({ onSuccess }) => {
   const handleVisibility = () => {
     setPasswordVisible(!isPasswordVisible);
     setIcon(
-      isPasswordVisible
+      !isPasswordVisible
         ? "ant-design:eye-outlined"
         : "ant-design:eye-invisible-outlined"
     );
@@ -81,7 +83,7 @@ const Login = ({ onSuccess }) => {
               <TextInput
                 inputMode="text"
                 textContentType="password"
-                secureTextEntry={isPasswordVisible}
+                secureTextEntry={!isPasswordVisible}
                 value={user.password}
                 style={styles.inputText}
                 onChangeText={(text) => setUser({ ...user, password: text })}

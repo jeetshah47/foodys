@@ -5,7 +5,7 @@ import { useState } from "react";
 import Signup from "./Singup";
 
 const AuthScreen = ({ navigation }) => {
-  const [tab, setTab] = useState("Singup");
+  const [tab, setTab] = useState("Login");
 
   const handleChangeTabLogin = () => {
     setTab("Login");

@@ -12,13 +12,28 @@ import { theme } from "../../../style/Theme";
 import { Iconify } from "react-native-iconify";
 import { useState } from "react";
 
-const FoodCard = ({ imgUrl, name, price, nutritionalUrl, type, id }) => {
+const FoodCard = ({
+  imgUrl,
+  name,
+  price,
+  nutritionalUrl,
+  type,
+  id,
+  onItemAdd,
+  onItemRemove,
+}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [quantity, setQuantity] = useState(0);
   return (
     <View style={styles.container}>
       <Image
-        style={{ borderRadius: 15, width: 300, height: 200 }}
+        style={{
+          borderRadius: 15,
+          // height: 50,
+          width: "100%",
+          aspectRatio: 1.5,
+          borderColor: "#d3d1d8",
+        }}
         source={{ uri: imgUrl }}
       />
       <View
@@ -104,6 +119,7 @@ const FoodCard = ({ imgUrl, name, price, nutritionalUrl, type, id }) => {
             onPress={() => {
               if (quantity > 0) {
                 setQuantity(quantity - 1);
+                onItemRemove(id);
               }
             }}
           />
@@ -112,7 +128,10 @@ const FoodCard = ({ imgUrl, name, price, nutritionalUrl, type, id }) => {
             icon="carbon:add-filled"
             color={theme.colors.orange.secondary}
             size={30}
-            onPress={() => setQuantity(quantity + 1)}
+            onPress={() => {
+              setQuantity(quantity + 1);
+              onItemAdd(id);
+            }}
           />
         </View>
       </View>
