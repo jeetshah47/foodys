@@ -60,7 +60,7 @@ const FoodCard = ({
           icon="icon-park-solid:traditional-chinese-medicine"
           color={"#2e88fa"}
         />
-        <Modal animationType="slide=" visible={modalVisible}>
+        <Modal animationType="slide" visible={modalVisible}>
           <View
             style={{
               justifyContent: "center",
@@ -69,12 +69,18 @@ const FoodCard = ({
               height: "100%",
             }}
           >
-            <Text>Nutrients Chart</Text>
-            <Image source={{ uri: nutritionalUrl }} />
-            <Button
-              title="Back"
-              onPress={() => setModalVisible(!modalVisible)}
+            <Image
+              style={{ width: "100%", height: "100%" }}
+              source={{ uri: nutritionalUrl }}
             />
+            <View
+              style={{ position: "absolute", width: 80, bottom: 0, right: 30 }}
+            >
+              <Button
+                title="Back"
+                onPress={() => setModalVisible(!modalVisible)}
+              />
+            </View>
           </View>
         </Modal>
         <Text>Nutrients</Text>

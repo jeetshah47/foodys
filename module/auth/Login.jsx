@@ -37,7 +37,7 @@ const Login = ({ onSuccess }) => {
       });
       console.log(response);
       setLoading(false);
-      AsyncStorage.setItem("token", response.token);
+      AsyncStorage.setItem("token", response.id);
       onSuccess();
     } catch (error) {
       handleToast();

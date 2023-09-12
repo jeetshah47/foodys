@@ -12,8 +12,9 @@ import {
 import { theme } from "../../../style/Theme";
 import FoodCard from "./FoodCard";
 import { Iconify } from "react-native-iconify";
-import { getFoodByid } from "./api";
+import { getFoodByid, placeOrder } from "./api";
 import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RestaurantDetails = ({ route, navigation }) => {
   const { itemId, logoUrl, title } = route.params;
@@ -36,15 +37,25 @@ const RestaurantDetails = ({ route, navigation }) => {
     setCartItems((prev) => [...prev, itemId]);
   };
 
-  const handleOnPressPlace = () => {
-    const payload = {
-      user_id: "{{userId}}",
-      item_id_list: ["{{itemId1}}", "{{itemId1}}", "{{itemId2}}"],
-      restaurant_id: "{{resturantId}}",
-    };
-
-    ToastAndroid.show("Order Placed Successfully", ToastAndroid.SHORT);
-
+  const handleOnPressPlace = async () => {
+    const id = await AsyncStorage.getItem("token");
+    console.log(id);
+    if (id) {
+      const payload = {
+        user_id: id,
+        item_id_list: cartItems,
+        restaurant_id: itemId,
+      };
+      console.log(payload);
+      try {
+        const response = await placeOrder(payload);
+        console.log(response);
+        ToastAndroid.show("Order Placed Successfully", ToastAndroid.SHORT);
+      } catch (error) {
+        console.log(error);
+        ToastAndroid.show("Order Failed ", ToastAndroid.SHORT);
+      }
+    }
     // navigation.navigate("Restaurant", {
     //   screen: "Orders",
     //   cartItems: cartItems,

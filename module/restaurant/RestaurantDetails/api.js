@@ -8,6 +8,6 @@ export const getFoodByid = async (id) => {
 };
 
 export const placeOrder = async (data) => {
-  const result = await axios.post(`${API_URL}/order`, data);
+  const result = await axios.post(`${API_URL}/order`, {...data});
   return result.data;  
 }

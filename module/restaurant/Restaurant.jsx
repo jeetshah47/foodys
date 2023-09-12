@@ -11,7 +11,7 @@ import SearchBar from "../common/SearchBar/SearchBar";
 import RestaurantCard from "./RestaurantCard";
 import Filter from "../common/Filter/Filter";
 import { useEffect, useState } from "react";
-import { getRestaurant } from "./api";
+import { getRestaurant, getRestaurantByCity } from "./api";
 import { Dropdown } from "react-native-element-dropdown";
 import { Iconify } from "react-native-iconify";
 
@@ -88,7 +88,7 @@ const Restaurant = ({ navigation }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await getRestaurant();
+        const response = await getRestaurantByCity(city.name);
         console.log(response);
         setData(response);
       } catch (error) {
@@ -98,7 +98,7 @@ const Restaurant = ({ navigation }) => {
     fetchData();
 
     // setData
-  }, []);
+  }, [city]);
 
   useEffect(() => {
     const searct = data?.filter((item) => item.name.includes(searchParam));
