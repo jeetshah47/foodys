@@ -1,6 +1,6 @@
 import axios from "axios";
+import { API_URL } from "../../urls";
 
-const API_URL = "https://food-backend-moom.onrender.com";
 
 export const getFoodByid = async (id) => {
   const result = await axios.get(`${API_URL}/restaurant/${id}/items`);

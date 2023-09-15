@@ -51,15 +51,19 @@ const RestaurantDetails = ({ route, navigation }) => {
         const response = await placeOrder(payload);
         console.log(response);
         ToastAndroid.show("Order Placed Successfully", ToastAndroid.SHORT);
+        setFoodItem([]);
+        setCartItems([]);
+
+        navigation.navigate("Restaurant", {
+          screen: "Orders",
+          refresh: true,
+        });
       } catch (error) {
         console.log(error);
         ToastAndroid.show("Order Failed ", ToastAndroid.SHORT);
       }
     }
-    // navigation.navigate("Restaurant", {
-    //   screen: "Orders",
-    //   cartItems: cartItems,
-    // });
+
   };
 
   const handleRemoveFromCart = (itemId) => {
