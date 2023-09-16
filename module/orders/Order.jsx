@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import { theme } from "../../style/Theme";
 import { ScrollView } from "react-native";
 import { useEffect, useState } from "react";
@@ -15,6 +15,7 @@ const Order = () => {
         const result = await getOrders(id);
         console.log(result);
         setOrders(result);
+        ToastAndroid.show("Order Refreshed", ToastAndroid.SHORT);
       } catch (error) {
         console.log(error);
       }
@@ -25,7 +26,16 @@ const Order = () => {
   }, []);
 
   const OrderCard = (data) => (
-    <View style={styles.orderBox}>
+    <View
+      style={{
+        ...styles.orderBox,
+        backgroundColor:
+          data?.status === "Delivered" || data?.status === "Cancel"
+            ? theme.colors.tertiary
+            : theme.colors.white,
+        opacity: data?.status === "Delivered" || data?.status === "Cancel" ? 0.5 : 1,
+      }}
+    >
       <View
         style={{
           flexDirection: "row",

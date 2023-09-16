@@ -51,7 +51,6 @@ const RestaurantDetails = ({ route, navigation }) => {
         const response = await placeOrder(payload);
         console.log(response);
         ToastAndroid.show("Order Placed Successfully", ToastAndroid.SHORT);
-        setFoodItem([]);
         setCartItems([]);
 
         navigation.navigate("Restaurant", {
