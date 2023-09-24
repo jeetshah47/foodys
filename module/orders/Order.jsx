@@ -14,7 +14,15 @@ const Order = () => {
       try {
         const result = await getOrders(id);
         console.log(result);
-        setOrders(result);
+        let temp = [];
+        result.map((item) => {
+          if (item.status === "Delivered" || item.status === "Cancel") {
+            temp = [...temp, item];
+          } else {
+            temp = [item, ...temp];
+          }
+        });
+        setOrders(temp);
         ToastAndroid.show("Order Refreshed", ToastAndroid.SHORT);
       } catch (error) {
         console.log(error);
@@ -33,7 +41,8 @@ const Order = () => {
           data?.status === "Delivered" || data?.status === "Cancel"
             ? theme.colors.tertiary
             : theme.colors.white,
-        opacity: data?.status === "Delivered" || data?.status === "Cancel" ? 0.5 : 1,
+        opacity:
+          data?.status === "Delivered" || data?.status === "Cancel" ? 0.5 : 1,
       }}
     >
       <View
